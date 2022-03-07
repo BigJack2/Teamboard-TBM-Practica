@@ -1,15 +1,23 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, UrlTree } from '@angular/router';
-import { Observable } from 'rxjs';
+import { CanActivate, Router } from '@angular/router';
+import { UserService } from '../services/user.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
+
+//Activar o proteger rutas
 export class AuthGuard implements CanActivate {
-  canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    return true;
+  constructor(private _userService: UserService, private _router: Router) {}
+
+  //Esta funcion debe devolver un true o un false
+  canActivate(): boolean {
+    if (!this._userService.loggedIn()) {
+      //Si no hay token en el localstorage devuelvame al login
+      this._router.navigate(['/login']);
+      return false;
+    } else {
+      return true;
+    }
   }
-  
 }

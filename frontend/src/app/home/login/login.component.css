@@ -1,0 +1,31 @@
+.form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 100px 16px 0px;
+}
+
+.card {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.button {
+  width: 60%;
+  left: 20%;
+  padding: 8px 35px;
+  background-color: #e91e63;
+  color: #fff;
+}
+
+.button:hover {
+  background-color: #e0376f;
+  color: #fff;
+  transition: 0.4s;
+}

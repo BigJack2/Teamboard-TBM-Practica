@@ -32,7 +32,7 @@ const registerUser = async (req, res) => {
 //---------------------------------------------------------------------------------
 
 const registerAdminUser = async (req, res) => {
-  
+
   const passHash = await bcrypt.hassGenerate(req.body.password, 10);
 
   const userRegister = new user({
@@ -44,14 +44,14 @@ const registerAdminUser = async (req, res) => {
   });
 
   const result = await userRegister.save();
-  if(!result)
+  if (!result)
     return res.status(400).send({ message: "Failed to register user" })
 
-    const token = await jwt.generateToken(result);
+  const token = await jwt.generateToken(result);
 
-    return !token
-      ? res.status(500).send({ message: "Failed to register user" })
-      : res.status(200).send({ token }); 
+  return !token
+    ? res.status(500).send({ message: "Failed to register user" })
+    : res.status(200).send({ token });
 };
 
 //---------------------------------------------------------------------------------
@@ -70,7 +70,7 @@ const listUsers = async (req, res) => {
   const userList = await user.find({
     $and: [{ name: new RegExp(req.params["name"]) }, { dbStatus: true }],
   })
-    .populate("role") 
+    .populate("role")
     .exec();
   return userList.length === 0
     ? res.status(400).send({ message: "Empty users list" })
@@ -129,7 +129,7 @@ const updateUser = async (req, res) => {
 
   const userUpdated = await user.findByIdAndUpdate(req.body._id, {
     name: req.body.name,
-    email:req.body.email,
+    email: req.body.email,
     password: pass,
     role: req.body.role,
   });
@@ -159,12 +159,12 @@ const login = async (req, res) => {
     return res.status(400).send({ message: "Invalid Data" });
 
   const userLogin = await user.findOne({ email: req.body.email });
-console.log(req.body);
-console.log(userLogin);
+  console.log(req.body);
+  console.log(userLogin);
 
   //Funcion validLogin en el archivo ..services/user.js
-   const validLogin= await userService.validLogin(req.body, userLogin);
-  if(!validLogin)
+  const validLogin = await userService.validLogin(req.body, userLogin);
+  if (!validLogin)
     return res.status(400).send({ message: "Wrong email or password" });
 
   const token = await jwt.generateToken(userLogin);

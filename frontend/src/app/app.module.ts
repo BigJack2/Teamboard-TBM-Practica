@@ -20,6 +20,21 @@ import { RoleService } from './services/role.service';
 import { TaskService } from './services/task.service';
 import { TokenInterceptorService } from './services/token-interceptor.service';
 import { AuthGuard } from './guard/auth.guard';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+//Permite manejar formularios
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+// con el httpinterceptor capturamos un token
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+//Se copia del api de AngularMaterial
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatCardModule } from '@angular/material/card';
+import { MatInputModule } from '@angular/material/input';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { CdkAccordionModule } from '@angular/cdk/accordion';
+import { MatIconModule } from '@angular/material/icon';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 @NgModule({
   declarations: [
@@ -37,12 +52,34 @@ import { AuthGuard } from './guard/auth.guard';
     ListRoleComponent,
     UpdateRoleComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule],
+  //en los import ponemos todo lo que vayamos a usar de angular material
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    FormsModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatCardModule,
+    MatInputModule,
+    MatSnackBarModule,
+    CdkAccordionModule,
+    MatIconModule,
+    MatExpansionModule,
+  ],
   providers: [
     UserService,
     RoleService,
     TaskService,
-    TokenInterceptorService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptorService,
+      //Multi se usa para validar varios token a la vez
+      multi: true,
+    },
     AuthGuard,
   ],
   bootstrap: [AppComponent],

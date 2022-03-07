@@ -6,10 +6,10 @@ import admin from "../middlewares/admin.js";
 import validId from "../middlewares/validId.js";
 const router = express.Router();
 
-router.post("/register",auth,admin, roleMidd.existingRole, role.registerRole);
-router.get("/list/:name?",auth,admin, role.roleList);
-router.get("/find/:_id",auth,admin, validId, role.getRoleById);
-router.put("/update",auth,admin, roleMidd.doNotChanges, role.updateRole);
-router.put("/delete/:_id",auth,admin, validId, role.deleteRole);
+router.post("/register", auth, admin, roleMidd.existingRole, role.registerRole);
+router.get("/list/:name?", auth, admin, role.roleList);
+router.get("/find/:_id", auth, admin, validId, role.getRoleById);
+router.put("/update", auth, admin, roleMidd.doNotChanges, role.updateRole);
+router.put("/delete/:_id", auth, admin, validId, role.deleteRole);
 
 export default router;

@@ -1,0 +1,17 @@
+.headerspacer {
+  flex: 1 1 auto;
+}
+
+ul {
+  margin: auto;
+}
+
+a {
+  text-decoration: none;
+  color: #fff;
+}
+
+a:hover {
+  color: #e91e63;
+  transition: 0.4s;
+}
